@@ -1,0 +1,30 @@
+# a very minimal declarative config file
+_format_version: '2.1'
+_transform: true
+
+services:
+  - host: pokemon-service
+    name: pokemon-service
+    port: 3000
+    protocol: http
+    routes:
+      - name: pokemon-service-routes
+        methods:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+        path_handling: v0
+        paths:
+          - /api
+        strip_path: false
+        preserve_host: false
+    plugins:
+      - name: oidc
+        config:
+          client_id: 'pokemon-service'
+          client_secret: 'tQvHnANtzALhwPvSAYaatSkqcO6PZipn'
+          realm: pokemon
+          introspection_endpoint: 'http://192.168.1.2:9080/realms/pokemon/protocol/openid-connect/token/introspect'
+          discovery: 'http://192.168.1.2:9080/realms/pokemon/.well-known/openid-configuration'
